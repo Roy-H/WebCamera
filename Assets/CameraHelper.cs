@@ -4,6 +4,7 @@ using BestHTTP.SignalRCore.Messages;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
@@ -58,9 +59,11 @@ public class CameraHelper : MonoBehaviour {
             var data = TakeSnapshot();
             a.LoadImage(data);
             Holder.texture = a;
-
+            File.WriteAllBytes("D:/imgo.jpg", data);
             //hub.Send("SendMessage", "u", "m");
-            hub.Send("UnicastVideoFrameMessage2", Encoding.UTF8.GetString(data));
+
+            //string base64 = Convert.ToBase64String(bytes);
+            hub.Send("UnicastVideoFrameMessage2", Convert.ToBase64String(data));
             //.OnSuccess(result => 
             //{
             //    Debug.Log("ok");
